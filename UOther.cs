@@ -61,20 +61,52 @@ namespace Utility
 		}
 	}
 
-	public class Timer
+	static class UCurve
+	{
+		static float doublePi { get { return Mathf.PI * 2f; } }
+
+		public static AnimationCurve bell = new AnimationCurve(
+			new Keyframe(0f, 0f),
+			new Keyframe(.5f, 1f),
+			new Keyframe(1f, 0f)
+			);
+
+		public static AnimationCurve sine = new AnimationCurve(
+			new Keyframe(0f, 0f, doublePi, doublePi),
+			new Keyframe(.25f, 1f, 0f, 0f),
+			new Keyframe(.75f, -1f, 0f, 0f),
+			new Keyframe(1f, 0f, doublePi, doublePi)
+			);
+	}
+
+	class Timer
 	{
 		private float timeFromStart = Mathf.NegativeInfinity;
 		private float duration;
+		protected bool isUnscaled = false;
+		private float CurrentTime { get { return isUnscaled ? Time.unscaledTime : Time.time; } }
 
-		public float Elapsed { get { return Time.time - timeFromStart; } }
-		public bool IsExpired { get { return Elapsed > duration; } }
-		public float Completion { get { return UMath.Normalize(Elapsed, 0f, duration); } }
+		public bool IsUnscaled { get { return isUnscaled; } }
+		public float Completion { get { return UMath.Normalize(ElapsedTime, 0f, duration); } }
+		public float ElapsedTime { get { return Time.time - timeFromStart; } }
 
+		public bool IsExpired
+		{
+			get { return CurrentTime - timeFromStart > duration; }
+		}
 
 		public void Set(float duration)
 		{
-			timeFromStart = Time.time;
+			timeFromStart = CurrentTime;
 			this.duration = duration;
+		}
+	}
+
+	class UnscaledTimer : Timer
+	{
+		public UnscaledTimer()
+		{
+			this.isUnscaled = true;
 		}
 	}
 
