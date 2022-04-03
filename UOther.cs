@@ -88,6 +88,7 @@ namespace Utility
 
 		public bool IsUnscaled { get { return isUnscaled; } }
 		public float Completion { get { return UMath.Normalize(ElapsedTime, 0f, duration); } }
+		public float RemainingTime { get { return duration - ElapsedTime; } }
 		public float ElapsedTime { get { return Time.time - timeFromStart; } }
 
 		public bool IsExpired
