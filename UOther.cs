@@ -60,6 +60,22 @@ namespace Utility
 			}
 		}
 	}
+	
+	class UTime
+	{
+		public static string FormatTime(double time)
+		{
+			var mm = (int)(time / 60);
+			var ss = (int)(time - mm * 60);
+
+			return FormatNum(mm) + ":" + FormatNum(ss);
+
+			string FormatNum(int num)
+			{
+				return (num > 9 ? "" : "0") + num.ToString();
+			}
+		}
+	}
 
 	static class UCurve
 	{
