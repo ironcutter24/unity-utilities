@@ -50,7 +50,7 @@ namespace Utility
 				{
 					callback(Mathf.Lerp(from, to, state));
 					yield return null;
-					state = Mathf.Clamp(state + mult * Time.deltaTime, 0f, 1f);
+					state += mult * Time.deltaTime;
 				}
 				callback(to);
 			}
