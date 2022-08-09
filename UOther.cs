@@ -27,17 +27,33 @@ namespace Utility
 				action(parameter);
 		}
 
-		public static IEnumerator _Transition(float duration, System.Action<float> callback)
+		public static bool IsBelowCamera(Transform trs)
 		{
-			float mult = 1 / duration;
-			float state = 0;
-			while (state < 1f)
+			return IsBelowCamera(trs.position);
+		}
+
+		public static bool IsBelowCamera(Vector3 pos)
+		{
+			return pos.y < Camera.main.transform.position.y;
+		}
+
+		public static void Tween(MonoBehaviour instance, float from, float to, float time, System.Action<float> callback)
+        {
+			instance.StartCoroutine(_Tween(from, to, time, callback));
+
+
+			static IEnumerator _Tween(float from, float to, float time, System.Action<float> callback)
 			{
-				callback(state);
-				yield return null;
-				state = Mathf.Clamp(state + Time.deltaTime * mult, 0f, 1f);
+				float mult = 1 / time;
+				float state = 0;
+				while (state < 1f)
+				{
+					callback(Mathf.Lerp(from, to, state));
+					yield return null;
+					state = Mathf.Clamp(state + mult * Time.deltaTime, 0f, 1f);
+				}
+				callback(to);
 			}
-			callback(state);
 		}
 	}
 
