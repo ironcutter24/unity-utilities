@@ -38,7 +38,7 @@ namespace Utility
 		}
 
 		public static void Tween(MonoBehaviour instance, float from, float to, float time, System.Action<float> callback)
-        {
+		{
 			instance.StartCoroutine(_Tween(from, to, time, callback));
 
 
@@ -88,6 +88,27 @@ namespace Utility
 
 			string FormatNum(int num)
 			{
+				return (num > 9 ? "" : "0") + num.ToString();
+			}
+		}
+		
+		string FormatTime(double time, useDashes = false)
+		{
+			var hh = DivisionStep(ref time, 3600);
+			var mm = DivisionStep(ref time, 60);
+			var ss = DivisionStep(ref time, 1);
+			return FormatNum(hh) + ":" + FormatNum(mm) + ":" + FormatNum(ss);
+
+			int DivisionStep(ref double num, int den)
+			{
+				var xx = (int)(num / den);
+				time -= xx;
+				return xx;
+			}
+
+			string FormatNum(int num)
+			{
+				if (useDashes && num == 0) return "--";
 				return (num > 9 ? "" : "0") + num.ToString();
 			}
 		}
