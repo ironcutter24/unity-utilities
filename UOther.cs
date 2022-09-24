@@ -95,7 +95,7 @@ namespace Utility
             int DivisionStep(ref double num, int den)
             {
                 var xx = (int)(num / den);
-                time -= xx;
+                time -= xx * den;
                 return xx;
             }
 
