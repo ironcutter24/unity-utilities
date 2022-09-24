@@ -79,40 +79,33 @@ namespace Utility
 	
 	class UTime
 	{
-		public static string FormatTime(double time)
-		{
-			var mm = (int)(time / 60);
-			var ss = (int)(time - mm * 60);
+        public static string FormatTime(double time, bool alwaysShowHH = false, bool useDashes = false, string separator = ":")
+        {
+            var hh = DivisionStep(ref time, 3600);
+            var mm = DivisionStep(ref time, 60);
+            var ss = DivisionStep(ref time, 1);
 
-			return FormatNum(mm) + ":" + FormatNum(ss);
+            string formatted = "";
+            if (alwaysShowHH || hh > 0)
+				formatted += FormatNum(hh) + separator;
+            formatted += FormatNum(mm) + separator;
+            formatted += FormatNum(ss);
+            return formatted;
 
-			string FormatNum(int num)
-			{
-				return (num > 9 ? "" : "0") + num.ToString();
-			}
-		}
-		
-		string FormatTime(double time, useDashes = false)
-		{
-			var hh = DivisionStep(ref time, 3600);
-			var mm = DivisionStep(ref time, 60);
-			var ss = DivisionStep(ref time, 1);
-			return FormatNum(hh) + ":" + FormatNum(mm) + ":" + FormatNum(ss);
+            int DivisionStep(ref double num, int den)
+            {
+                var xx = (int)(num / den);
+                time -= xx;
+                return xx;
+            }
 
-			int DivisionStep(ref double num, int den)
-			{
-				var xx = (int)(num / den);
-				time -= xx;
-				return xx;
-			}
-
-			string FormatNum(int num)
-			{
-				if (useDashes && num == 0) return "--";
-				return (num > 9 ? "" : "0") + num.ToString();
-			}
-		}
-	}
+            string FormatNum(int num)
+            {
+                if (useDashes && num == 0) return "--";
+                return (num > 9 ? "" : "0") + num.ToString();
+            }
+        }
+    }
 
 	static class UCurve
 	{
