@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Utility
+namespace Utility.LinearAlgebra
 {
 	public static class UVector
 	{
-		public static float Vector2ToAngle(Vector2 direction)
+		public static float ToAngle(this Vector2 direction)
 		{
 			return Vector2.SignedAngle(Vector2.right, direction);
 		}
@@ -26,9 +26,9 @@ namespace Utility
 			return GetXZ(targetPosition - fromPosition).normalized;
 		}
 
-		public static Vector3 GetXZ(Vector3 source)
+		public static Vector3 GetXZ(this Vector3 vector)
 		{
-			return Vector3.right * source.x + Vector3.forward * source.z;
+			return Vector3.right * vector.x + Vector3.forward * vector.z;
 		}
 
 		public static Vector2 ElementWiseProduct(Vector2 a, Vector2 b)

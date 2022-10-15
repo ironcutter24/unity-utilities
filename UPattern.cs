@@ -23,11 +23,11 @@ namespace Utility.Patterns
 			if (_instance == null)
 				_instance = this as T;
 			else
-				Destroy(this.gameObject);
+				Destroy(gameObject);
 		}
 	}
 
-	namespace FSM
+    namespace FSM
 	{
 		public abstract class State<T>
 		{
